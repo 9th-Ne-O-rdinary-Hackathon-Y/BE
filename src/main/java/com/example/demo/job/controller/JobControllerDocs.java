@@ -16,7 +16,7 @@ import com.example.demo.job.dto.JobFindRespDto;
 import com.example.demo.job.dto.JobResDto;
 import jakarta.validation.Valid;
 
-@Tag(name = "Job", description = "직무 관련 API")  // 추가!
+@Tag(name = "Job", description = "직무 관련 API")
 public interface JobControllerDocs {
 
     @Operation(
@@ -107,13 +107,13 @@ public interface JobControllerDocs {
         )
     })
     @PostMapping
-    ApiResponse<JobFindRespDto.JobFindResponse> findJob(  // public 제거
+    ApiResponse<JobFindRespDto.JobFindResponse> findJob(
         @Valid @RequestBody JobFindReqDto.JobFindRequestPost request
     );
 
     @Operation(
-    summary = "직무 상세 조회",
-    description = "직무 ID로 해당 직무의 상세 정보를 조회합니다."
+        summary = "직무 상세 조회",
+        description = "직무 ID로 해당 직무의 상세 정보를 조회합니다."
     )
     @io.swagger.v3.oas.annotations.responses.ApiResponses({
         @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -126,15 +126,34 @@ public interface JobControllerDocs {
                     name = "성공 응답",
                     value = """
                     {
-                    "result": "SUCCESS",
-                    "data": {
-                        "jobId": 1,
-                        "jobName": "기획/PM",
-                        "keywords": ["전략", "기획", "분석"],
-                        "img": "pm.jpg",
-                        "jobSummary": "PM 직무 설명",
-                        "jobDescription": "상세한 직무 설명..."
-                    }
+                      "result": "SUCCESS",
+                      "data": {
+                        "getJobDto": {
+                          "name": "기획/PM",
+                          "keyword": ["전략", "기획", "분석"],
+                          "content": "PM 직무 상세 내용",
+                          "image": "pm.jpg"
+                        },
+                        "youtubeListDto": {
+                          "getYoutubeList": [
+                            {
+                              "youtubeId": 111,
+                              "title": "[데이터분석] 비전공자 데이터분석 직무 합격 비결",
+                              "URL": "https://www.youtube.com/watch?v=4K_DkIVy8FE",
+                              "image": "https://i.ytimg.com/vi/4K_DkIVy8FE/mqdefault.jpg"
+                            },
+                            {
+                              "youtubeId": 112,
+                              "title": "AI 빅데이터 분석 전문 회사 직원들의 평균 연봉",
+                              "URL": "https://www.youtube.com/watch?v=YgNE5YSNPFo",
+                              "image": "https://i.ytimg.com/vi/YgNE5YSNPFo/mqdefault.jpg"
+                            }
+                          ]
+                        },
+                        "bootcampListDTO": {
+                          "getBootcampList": []
+                        }
+                      }
                     }
                     """
                 )
@@ -149,11 +168,11 @@ public interface JobControllerDocs {
                     name = "에러 응답",
                     value = """
                     {
-                    "result": "ERROR",
-                    "error": {
+                      "result": "ERROR",
+                      "error": {
                         "code": "INVALID_JOB_ID",
                         "message": "존재하지 않는 직무입니다."
-                    }
+                      }
                     }
                     """
                 )
@@ -168,11 +187,11 @@ public interface JobControllerDocs {
                     name = "서버 에러 응답",
                     value = """
                     {
-                    "result": "ERROR",
-                    "error": {
+                      "result": "ERROR",
+                      "error": {
                         "code": "INTERNAL_SERVER_ERROR",
                         "message": "서버 내부 오류가 발생했습니다."
-                    }
+                      }
                     }
                     """
                 )
@@ -181,7 +200,7 @@ public interface JobControllerDocs {
     })
     @GetMapping("/detail")
     ApiResponse<JobResDto.getJobDetailPage> getDetail(
-            @Parameter(description = "직무 ID", required = true, example = "1")
+            @Parameter(description = "직무 ID", required = true, example = "2")
             @RequestParam Long jobId
     );
 }
