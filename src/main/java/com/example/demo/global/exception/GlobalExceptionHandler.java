@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
-import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
-
-import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice
@@ -41,30 +38,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<?>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.warn("MethodArgumentNotValidException: {}", e.getMessage());
-        String errorMessage = e.getBindingResult().getFieldErrors().stream()
-                .map(FieldError::getDefaultMessage)
-                .collect(Collectors.joining(", "));
-
-        ErrorType errorType = new ErrorType() {
-            @Override
-            public String name() {
-                return "INVALID_INPUT_VALUE";
-            }
-
-            @Override
-            public HttpStatus getStatus() {
-                return HttpStatus.BAD_REQUEST;
-            }
-
-            @Override
-            public String getMessage() {
-                return errorMessage.isEmpty() ? "입력값이 올바르지 않습니다." : errorMessage;
-            }
-        };
-
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.error(errorType));
+                .body(ApiResponse.error(GlobalErrorType.INVALID_INPUT_VALUE));
     }
 
     /**
@@ -73,30 +49,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ApiResponse<?>> handleBindException(BindException e) {
         log.warn("BindException: {}", e.getMessage());
-        String errorMessage = e.getBindingResult().getFieldErrors().stream()
-                .map(FieldError::getDefaultMessage)
-                .collect(Collectors.joining(", "));
-
-        ErrorType errorType = new ErrorType() {
-            @Override
-            public String name() {
-                return "INVALID_INPUT_VALUE";
-            }
-
-            @Override
-            public HttpStatus getStatus() {
-                return HttpStatus.BAD_REQUEST;
-            }
-
-            @Override
-            public String getMessage() {
-                return errorMessage.isEmpty() ? "입력값이 올바르지 않습니다." : errorMessage;
-            }
-        };
-
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.error(errorType));
+                .body(ApiResponse.error(GlobalErrorType.INVALID_INPUT_VALUE));
     }
 
     /**
