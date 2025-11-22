@@ -37,7 +37,7 @@ jobs:
       - name: Make application.properties
         run: |
           mkdir -p ./src/main/resources
-          echo "${{ secrets.APPLICATION_YML }}" > ./src/main/resources/application.properties
+          echo "${{ secrets.APPLICATION_YML }}" > ./src/main/resources/application.yml
         shell: bash
 
       # 5. 테스트 제외 Gradle 빌드
