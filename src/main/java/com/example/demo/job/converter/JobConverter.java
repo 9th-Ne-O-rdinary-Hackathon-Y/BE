@@ -15,7 +15,7 @@ public class JobConverter {
             JobResDto.BootcampListDTO bootcampListDTO) {
 
         return JobResDto.getJobDetailPage.builder()
-                .jobDto(getJobDto)
+                .getJobDto(getJobDto)
                 .youtubeListDto(youtubeListDTO)
                 .bootcampListDTO(bootcampListDTO)
                 .build();
@@ -32,7 +32,7 @@ public class JobConverter {
 
     public static JobResDto.YoutubeListDTO toYoutubeListDTO(List<Youtube> youtubeList) {
         return JobResDto.YoutubeListDTO.builder()
-                .youtubeList(
+                .getYoutubeList(
                         youtubeList.stream()
                                 .map(JobConverter::toYoutubeDetail)
                                 .toList()
@@ -42,7 +42,7 @@ public class JobConverter {
 
     public static JobResDto.BootcampListDTO toBootcampListDTO(List<Bootcamp> bootcampList) {
         return JobResDto.BootcampListDTO.builder()
-                .bootcampList(
+                .getBootcampList(
                         bootcampList.stream()
                                 .map(JobConverter::toBootcampDetail)
                                 .toList()

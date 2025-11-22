@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RequestMapping("/api/job")
 public class JobController {
-    private JobQueryService jobQueryService;
+    private final JobQueryService jobQueryService;
 
     @GetMapping
     public ApiResponse<JobResDto.getJobDetailPage> getDetail(
