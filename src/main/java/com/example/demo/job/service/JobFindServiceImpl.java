@@ -138,15 +138,14 @@ public class JobFindServiceImpl implements JobFindService {
             
             JobFindRespDto.JobInfo jobInfo = JobFindRespDto.JobInfo.builder()
                 .priority(i + 1)
+                .jobId(job.getId())  // Job ID 추가
                 .jobName(job.getName())
-                .keyword1(keywords.size() > 0 ? keywords.get(0) : "")
-                .keyword2(keywords.size() > 1 ? keywords.get(1) : "")
-                .keyword3(keywords.size() > 2 ? keywords.get(2) : "")
+                .keywords(keywords != null ? keywords : List.of())
                 .img(job.getImage())
                 .jobSummary(job.getSummary())
                 .build();
             
-            jobInfoList.add(jobInfo);
+            jobInfoList.add(jobInfo);  // 이 줄이 빠져있었네요!
         }
 
         // Personality 생성
