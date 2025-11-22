@@ -16,7 +16,7 @@ public class YoutubeSearchService {
         return youtubeClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/search")
-                        .queryParam("q", "데이터 분석 직무 설명")
+                        .queryParam("q", query)
                         .queryParam("part", "{part}")
                         .queryParam("type", "{type}")
                         .queryParam("maxResults", "{maxResults}")
