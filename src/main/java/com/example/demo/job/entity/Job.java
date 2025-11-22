@@ -37,6 +37,7 @@ public class Job {
     @OneToMany(mappedBy = "job")
     private List<Youtube> youtubeList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "job")
     private List<Bootcamp> bootcampList = new ArrayList<>();
 }
