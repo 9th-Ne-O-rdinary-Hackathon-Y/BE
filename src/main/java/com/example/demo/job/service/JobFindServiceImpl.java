@@ -145,7 +145,7 @@ public class JobFindServiceImpl implements JobFindService {
                 .jobSummary(job.getSummary())
                 .build();
             
-            jobInfoList.add(jobInfo);  // 이 줄이 빠져있었네요!
+            jobInfoList.add(jobInfo);
         }
 
         // Personality 생성
