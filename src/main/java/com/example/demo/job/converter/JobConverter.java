@@ -53,7 +53,7 @@ public class JobConverter {
     public static JobResDto.getYoutube toYoutubeDetail(Youtube youtube){
         return JobResDto.getYoutube.builder()
                 .title(youtube.getTitle())
-                .URL(youtube.getURL())
+                .URL(youtube.getUrl())
                 .image(youtube.getImage())
                 .build();
     }
@@ -61,7 +61,7 @@ public class JobConverter {
     public static JobResDto.getBootcamp toBootcampDetail(Bootcamp bootcamp){
         return JobResDto.getBootcamp.builder()
                 .name(bootcamp.getName())
-                .URL(bootcamp.getURL())
+                .URL(bootcamp.getUrl())
                 .image(bootcamp.getImage())
                 .build();
     }
