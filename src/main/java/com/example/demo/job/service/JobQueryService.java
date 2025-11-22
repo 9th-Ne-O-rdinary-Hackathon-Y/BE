@@ -15,17 +15,17 @@ public class JobQueryService {
 
     private final JobRepository jobRepository;
 
-    public JobResDto.JobDetailPage getJobDetail(Long jobId) {
+    public JobResDto.getJobDetailPage getJobDetail(Long jobId) {
 
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(()->new JobException(JobErrorType.JOB_NOT_FOUND));
 
-        JobResDto.Job jobDto = JobConverter.toJobDetail(job);
+        JobResDto.getJob getJobDto = JobConverter.toJobDetail(job);
         JobResDto.YoutubeListDTO youtubeListDTO = JobConverter.toYoutubeListDTO(job.getYoutubeList());
         JobResDto.BootcampListDTO bootcampListDTO = JobConverter.toBootcampListDTO(job.getBootcampList());
 
         return JobConverter.toJobDetailPage(
-                jobDto, youtubeListDTO, bootcampListDTO
+                getJobDto, youtubeListDTO, bootcampListDTO
         );
     }
 }
