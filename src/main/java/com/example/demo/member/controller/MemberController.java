@@ -14,13 +14,12 @@ public class MemberController {
 
     private final MemberService memberService;
 
-
-    @GetMapping("/me")
-    public ApiResponse<?> getMember(@CurrentUser Member member) {
-        // Implementation to get member details
-        memberService.getMember(member);
-        return ApiResponse.success(member.getEmail());
-    }
+//    @GetMapping("/me")
+//    public ApiResponse<?> getMember(@CurrentUser Member member) {
+//        // Implementation to get member details
+//        memberService.getMember(member);
+//        return ApiResponse.success(member.getEmail());
+//    }
 
 
 }
