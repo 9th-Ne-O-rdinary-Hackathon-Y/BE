@@ -18,7 +18,7 @@ public class JobController {
     private JobQueryService jobQueryService;
 
     @GetMapping
-    public ApiResponse<JobResDto.JobDetailPage> getDetail(
+    public ApiResponse<JobResDto.getJobDetailPage> getDetail(
             @RequestParam Long jobId
     ){
 

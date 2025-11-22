@@ -9,20 +9,20 @@ import java.util.List;
 
 public class JobConverter {
 
-    public static JobResDto.JobDetailPage toJobDetailPage(
-            JobResDto.Job jobDto,
+    public static JobResDto.getJobDetailPage toJobDetailPage(
+            JobResDto.getJob getJobDto,
             JobResDto.YoutubeListDTO youtubeListDTO,
             JobResDto.BootcampListDTO bootcampListDTO) {
 
-        return JobResDto.JobDetailPage.builder()
-                .jobDto(jobDto)
+        return JobResDto.getJobDetailPage.builder()
+                .jobDto(getJobDto)
                 .youtubeListDto(youtubeListDTO)
                 .bootcampListDTO(bootcampListDTO)
                 .build();
     }
 
-    public static JobResDto.Job toJobDetail(Job job){
-        return JobResDto.Job.builder()
+    public static JobResDto.getJob toJobDetail(Job job){
+        return JobResDto.getJob.builder()
                 .name(job.getName())
                 .keyword(job.getKeyword())
                 .content(job.getContent())
@@ -50,16 +50,16 @@ public class JobConverter {
                 .build();
     }
 
-    public static JobResDto.Youtube toYoutubeDetail(Youtube youtube){
-        return JobResDto.Youtube.builder()
+    public static JobResDto.getYoutube toYoutubeDetail(Youtube youtube){
+        return JobResDto.getYoutube.builder()
                 .title(youtube.getTitle())
                 .URL(youtube.getURL())
                 .image(youtube.getImage())
                 .build();
     }
 
-    public static JobResDto.Bootcamp toBootcampDetail(Bootcamp bootcamp){
-        return JobResDto.Bootcamp.builder()
+    public static JobResDto.getBootcamp toBootcampDetail(Bootcamp bootcamp){
+        return JobResDto.getBootcamp.builder()
                 .name(bootcamp.getName())
                 .brand(bootcamp.getBrand())
                 .URL(bootcamp.getURL())
