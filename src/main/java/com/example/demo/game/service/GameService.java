@@ -1,8 +1,9 @@
-// 3. Service
 package com.example.demo.game.service;
 
 import com.example.demo.game.dto.GameDto;
 import com.example.demo.game.entity.Game;
+import com.example.demo.game.exception.GameErrorType;
+import com.example.demo.game.exception.GameException;
 import com.example.demo.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class GameService {
     // ID로 단건 조회
     public GameDto.GameResponse getGameById(Long id) {
         Game game = gameRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("게임을 찾을 수 없습니다: " + id));
+            .orElseThrow(() -> new GameException(GameErrorType.GAME_NOT_FOUND));
         return GameDto.GameResponse.from(game);
     }
 
