@@ -17,17 +17,17 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/signup")
-    public ApiResponse<MemberLoginDto.Response> registerMember(@RequestBody MemberLoginDto.Request request) {
-        String token = authService.registerMember(request.getEmail(), request.getPassword());
-        MemberLoginDto.Response response = MemberLoginDto.Response.of(token);
-        return ApiResponse.success(response);
-    }
-
-    @PostMapping("/login")
-    public ApiResponse<MemberLoginDto.Response> loginMember(@RequestBody MemberLoginDto.Request request) {
-        String token = authService.loginMember(request.getEmail(), request.getPassword());
-        MemberLoginDto.Response response = MemberLoginDto.Response.of(token);
-        return ApiResponse.success(response);
-    }
+//    @PostMapping("/signup")
+//    public ApiResponse<MemberLoginDto.Response> registerMember(@RequestBody MemberLoginDto.Request request) {
+//        String token = authService.registerMember(request.getEmail(), request.getPassword());
+//        MemberLoginDto.Response response = MemberLoginDto.Response.of(token);
+//        return ApiResponse.success(response);
+//    }
+//
+//    @PostMapping("/login")
+//    public ApiResponse<MemberLoginDto.Response> loginMember(@RequestBody MemberLoginDto.Request request) {
+//        String token = authService.loginMember(request.getEmail(), request.getPassword());
+//        MemberLoginDto.Response response = MemberLoginDto.Response.of(token);
+//        return ApiResponse.success(response);
+//    }
 }
