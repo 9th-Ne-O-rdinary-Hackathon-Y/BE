@@ -1,4 +1,4 @@
-package com.example.demo.controller.dto;
+package com.example.demo.member.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

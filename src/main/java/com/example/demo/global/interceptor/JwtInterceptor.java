@@ -1,8 +1,8 @@
 package com.example.demo.global.interceptor;
 
-import com.example.demo.entity.Member;
+import com.example.demo.member.entity.Member;
 import com.example.demo.global.util.JwtUtil;
-import com.example.demo.repository.MemberRepository;
+import com.example.demo.member.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

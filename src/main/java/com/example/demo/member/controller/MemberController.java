@@ -1,11 +1,9 @@
-package com.example.demo.controller;
+package com.example.demo.member.controller;
 
-import com.example.demo.controller.dto.MemberLoginDto;
-import com.example.demo.entity.Member;
+import com.example.demo.member.entity.Member;
 import com.example.demo.global.interceptor.CurrentUser;
 import com.example.demo.global.response.ApiResponse;
-import com.example.demo.service.MemberService;
-import lombok.NoArgsConstructor;
+import com.example.demo.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

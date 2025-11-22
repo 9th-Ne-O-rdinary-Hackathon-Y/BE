@@ -1,11 +1,10 @@
-package com.example.demo.service;
+package com.example.demo.member.service;
 
-import com.example.demo.controller.dto.MemberLoginDto;
-import com.example.demo.entity.Member;
+import com.example.demo.member.entity.Member;
 import com.example.demo.global.exception.CoreException;
 import com.example.demo.global.exception.GlobalErrorType;
 import com.example.demo.global.util.JwtUtil;
-import com.example.demo.repository.MemberRepository;
+import com.example.demo.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

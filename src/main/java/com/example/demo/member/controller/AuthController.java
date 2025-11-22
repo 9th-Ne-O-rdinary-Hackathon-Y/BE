@@ -1,9 +1,9 @@
-package com.example.demo.controller;
+package com.example.demo.member.controller;
 
-import com.example.demo.controller.dto.MemberLoginDto;
+import com.example.demo.member.controller.dto.MemberLoginDto;
 import com.example.demo.global.response.ApiResponse;
 
-import com.example.demo.service.AuthService;
+import com.example.demo.member.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
