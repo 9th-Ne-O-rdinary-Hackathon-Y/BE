@@ -1,8 +1,10 @@
-package com.example.demo.find.service;
+package com.example.demo.job.service;
 
-import com.example.demo.find.dto.JobFindReqDto;
-import com.example.demo.find.dto.JobFindRespDto;
-import com.example.demo.find.dto.JobFindCalcDto; // AnalysisResultDto 위치
+import com.example.demo.job.dto.JobFindReqDto;
+import com.example.demo.job.dto.JobFindRespDto; // ← 이렇게 변경
+import com.example.demo.job.dto.JobFindCalcDto;
+import com.example.demo.job.entity.Job;
+import com.example.demo.job.repository.JobRepository;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +13,16 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class JobFindServiceImpl implements JobFindService {
+
+    private final JobRepository jobRepository;
 
     // Game 2 점수표 (키: 질문 내용)
     private static final Map<String, JobFindCalcDto.AnalysisResultDto> GAME2_SCORE_MAP = new HashMap<>();
@@ -55,41 +61,40 @@ public class JobFindServiceImpl implements JobFindService {
         GAME3_SCORE_MAP.put(3, new JobFindCalcDto.AnalysisResultDto(10, 70, 10, 60, 10, 80));
     }
     
-@Getter
-@RequiredArgsConstructor
-private enum JobWeight {
-    PM("기획/PM", 1, 0.10, 0.05, 0.15, 0.30, 0.15, 0.25),
-    OPERATIONS("운영", 2, 0.15, 0.35, 0.05, 0.10, 0.25, 0.10),
-    MARKETING("마케팅", 3, 0.25, 0.05, 0.30, 0.10, 0.10, 0.20),
-    DEV("개발", 4, 0.15, 0.25, 0.10, 0.30, 0.10, 0.10),
-    DATA("데이터", 5, 0.10, 0.30, 0.10, 0.35, 0.05, 0.10),
-    SALES("영업", 6, 0.25, 0.05, 0.15, 0.05, 0.35, 0.15),
-    HR("인사/HR", 7, 0.05, 0.25, 0.05, 0.10, 0.20, 0.35),
-    DESIGN("디자인", 8, 0.10, 0.25, 0.30, 0.10, 0.10, 0.15);
+    @Getter
+    @RequiredArgsConstructor
+    private enum JobWeight {
+        PM("기획/PM", 1, 0.10, 0.05, 0.15, 0.30, 0.15, 0.25),
+        OPERATIONS("운영", 2, 0.15, 0.35, 0.05, 0.10, 0.25, 0.10),
+        MARKETING("마케팅", 3, 0.25, 0.05, 0.30, 0.10, 0.10, 0.20),
+        DEV("개발", 4, 0.15, 0.25, 0.10, 0.30, 0.10, 0.10),
+        DATA("데이터", 5, 0.10, 0.30, 0.10, 0.35, 0.05, 0.10),
+        SALES("영업", 6, 0.25, 0.05, 0.15, 0.05, 0.35, 0.15),
+        HR("인사/HR", 7, 0.05, 0.25, 0.05, 0.10, 0.20, 0.35),
+        DESIGN("디자인", 8, 0.10, 0.25, 0.30, 0.10, 0.10, 0.15);
 
-    private final String jobName;
-    private final int jobNumber;
-    private final double paceW;
-    private final double accW;
-    private final double riskW;
-    private final double reasoningW;
-    private final double stressW;
-    private final double workStyleW;
+        private final String jobName;
+        private final int jobNumber;
+        private final double paceW;
+        private final double accW;
+        private final double riskW;
+        private final double reasoningW;
+        private final double stressW;
+        private final double workStyleW;
 
-    // 사용자의 점수와 가중치를 곱해 적합도 계산
-    public double calculateMatchScore(JobFindCalcDto.AnalysisResultDto userScore) {
-        return (userScore.pace() * this.paceW) +
-               (userScore.accuracy() * this.accW) +
-               (userScore.riskTaking() * this.riskW) +
-               (userScore.reasoning() * this.reasoningW) +
-               (userScore.stress() * this.stressW) +
-               (userScore.workStyle() * this.workStyleW);
+        // 사용자의 점수와 가중치를 곱해 적합도 계산
+        public double calculateMatchScore(JobFindCalcDto.AnalysisResultDto userScore) {
+            return (userScore.pace() * this.paceW) +
+                   (userScore.accuracy() * this.accW) +
+                   (userScore.riskTaking() * this.riskW) +
+                   (userScore.reasoning() * this.reasoningW) +
+                   (userScore.stress() * this.stressW) +
+                   (userScore.workStyle() * this.workStyleW);
+        }
     }
-}
-
 
     @Override
-    public JobFindRespDto.JobNumber getJobNumber(JobFindReqDto.JobFindRequestPost request) {
+    public JobFindRespDto.JobFindResponse getJobResponse(JobFindReqDto.JobFindRequestPost request) {
         
         // 1. Game 1 결과 계산 (민첩성 분석)
         JobFindReqDto.Game1 game1 = request.game1();
@@ -103,7 +108,6 @@ private enum JobWeight {
         JobFindCalcDto.AnalysisResultDto result1 = new JobFindCalcDto.AnalysisResultDto(
             0, rawResult1.acc(), 0, 0, 0, rawResult1.pace()
         );
-
 
         // 2. Game 2 결과 계산 (성향 분석)
         JobFindReqDto.Game2 game2 = request.game2();
@@ -122,18 +126,51 @@ private enum JobWeight {
         // 최종 결과
         JobFindCalcDto.AnalysisResultDto userFinalScore = calcAverage(result1, result2, result3);
 
-        JobWeight bestJob = findBestJob(userFinalScore);
+        // 상위 2개 직무 찾기
+        List<JobWeight> topJobs = findTopJobs(userFinalScore, 2);
         
-        return JobFindRespDto.JobNumber.builder()
-            .jobNumber(bestJob.getJobNumber())
+        // DB에서 Job 정보 가져오기
+        List<JobFindRespDto.JobInfo> jobInfoList = new ArrayList<>();
+        for (int i = 0; i < topJobs.size(); i++) {
+            JobWeight jobWeight = topJobs.get(i);
+            Job job = jobRepository.findByName(jobWeight.getJobName());
+            List<String> keywords = job.getKeyword();
+            
+            JobFindRespDto.JobInfo jobInfo = JobFindRespDto.JobInfo.builder()
+                .priority(i + 1)
+                .jobName(job.getName())
+                .keyword1(keywords.size() > 0 ? keywords.get(0) : "")
+                .keyword2(keywords.size() > 1 ? keywords.get(1) : "")
+                .keyword3(keywords.size() > 2 ? keywords.get(2) : "")
+                .img(job.getImage())
+                .jobSummary(job.getSummary())
+                .build();
+            
+            jobInfoList.add(jobInfo);
+        }
+
+        // Personality 생성
+        JobFindRespDto.Personality personality = JobFindRespDto.Personality.builder()
+            .riskTaking(getPersonalityLabel(userFinalScore.riskTaking()))
+            .pace(userFinalScore.pace())
+            .accuracy(userFinalScore.accuracy())
+            .workStyle(getWorkStyleLabel(userFinalScore.workStyle()))
             .build();
 
+        // 최종 응답 생성
+        return JobFindRespDto.JobFindResponse.builder()
+            .description(generateDescription(userFinalScore))
+            .job(jobInfoList)
+            .personality(personality)
+            .build();
     }
     
-    private JobWeight findBestJob(JobFindCalcDto.AnalysisResultDto userScore) {
+    // 상위 N개 직무 찾기
+    private List<JobWeight> findTopJobs(JobFindCalcDto.AnalysisResultDto userScore, int topN) {
         return Arrays.stream(JobWeight.values())
-                .max(Comparator.comparingDouble(job -> job.calculateMatchScore(userScore)))
-                .orElse(JobWeight.PM); // 기본값 (혹시 모를 오류 대비)
+                .sorted(Comparator.comparingDouble((JobWeight job) -> job.calculateMatchScore(userScore)).reversed())
+                .limit(topN)
+                .collect(Collectors.toList());
     }
 
     private JobFindCalcDto.AnalysisResultDto calcAverage(
@@ -162,7 +199,7 @@ private enum JobWeight {
 
         double error = Math.sqrt(Math.pow(clientX - answerX, 2) + Math.pow(clientY - answerY, 2));
         double acc = Math.max(0, 100 - (error * k1));
-        double pace = Math.min(100, Math.max(0, 100 - (double) ms / k2)); // int 나눗셈 주의
+        double pace = Math.min(100, Math.max(0, 100 - (double) ms / k2));
 
         return new JobFindCalcDto.GameResult1(acc, pace);
     }
@@ -171,25 +208,8 @@ private enum JobWeight {
     private JobFindCalcDto.AnalysisResultDto getGame2Result(
         String q1, String q2, String q3, String q4, String q5
     ) {
-        // q1: 정해진 규정 내에서 일하기
-        // q2: 빠르게 넘기기
-        // q3: 직감대로 선택
-        // q4: 함께 논의
-        // q5: 급한 일 먼저
-        // 선택한 경우:
-
-        //Risk Taking: 0 + 25 + 30 + 0 + 10 = 65
-        //Accuracy: 20 + 0 + 0 + 0 + 0 = 20
-        //Reasoning: 5 + 0 + 0 + 15 + 0 = 20
-        //Work Style: 10 + 0 + 0 + 70 + 0 = 80
-        //Stress: 5 + 0 + 0 + 15 + 30 = 50
-        //Pace: 5 + 30 + 25 + 0 + 25 = 85
-
-
-        // 답변 리스트
         List<String> answers = List.of(q1, q2, q3, q4, q5);
 
-        // 합산 변수 초기화
         double totalRisk = 0;
         double totalAcc = 0;
         double totalReasoning = 0;
@@ -198,7 +218,6 @@ private enum JobWeight {
         double totalPace = 0;
 
         for (String answer : answers) {
-            // Map에서 점수 가져오기
             JobFindCalcDto.AnalysisResultDto score = GAME2_SCORE_MAP.get(answer);
             
             if (score != null) {
@@ -211,7 +230,6 @@ private enum JobWeight {
             }
         }
 
-        // 최종 합산 결과 반환
         return new JobFindCalcDto.AnalysisResultDto(
             totalRisk, totalAcc, totalReasoning, totalWorkStyle, totalStress, totalPace
         );
@@ -219,9 +237,22 @@ private enum JobWeight {
 
     // 3번째 게임 로직
     private JobFindCalcDto.AnalysisResultDto getGame3Result(Integer select) {
-        // 선택지가 1,2,3 범위를 벗어날 경우 대비 (기본값 0점 or 예외처리)
         return GAME3_SCORE_MAP.getOrDefault(select, JobFindCalcDto.AnalysisResultDto.zero());
     }
 
-    // 최종 계산
+    // 성격 레이블 생성 (예시)
+    private String getPersonalityLabel(double riskTaking) {
+        if (riskTaking > 50) return "위험 감수";
+        else return "안정 추구";
+    }
+
+    private String getWorkStyleLabel(double workStyle) {
+        if (workStyle > 50) return "협업";
+        else return "독립";
+    }
+
+    private String generateDescription(JobFindCalcDto.AnalysisResultDto score) {
+        // 점수 기반으로 설명 생성
+        return "분석적으로 안정을 추구하며, 정확하게 처리하는 성향이에요.";
+    }
 }

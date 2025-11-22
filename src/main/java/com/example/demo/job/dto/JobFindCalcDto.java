@@ -1,4 +1,4 @@
-package com.example.demo.find.dto;
+package com.example.demo.job.dto;
 
 import lombok.Builder;
 

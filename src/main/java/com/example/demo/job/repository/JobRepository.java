@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface JobRepository extends JpaRepository<Job, Long> {
 
     public Optional<Job> findById(Long id);
+    public Job findByName(String name);
 }
