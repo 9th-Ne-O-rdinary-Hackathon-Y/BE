@@ -7,14 +7,14 @@ import java.util.List;
 public class JobResDto {
 
     @Builder
-    public record JobDetailPage(
-            JobResDto.Job jobDto,
+    public record getJobDetailPage(
+            getJob getJobDto,
             JobResDto.YoutubeListDTO youtubeListDto, //youtubeListDto
             JobResDto.BootcampListDTO bootcampListDTO
     ){}
 
     @Builder
-    public record Job(
+    public record getJob(
             String name,
             List<String> keyword,
             String content,
@@ -24,11 +24,11 @@ public class JobResDto {
 
     @Builder
     public record YoutubeListDTO(
-            List<Youtube> youtubeList
+            List<getYoutube> getYoutubeList
     ){}
 
     @Builder
-    public record Youtube(
+    public record getYoutube(
             String title,
             String URL,
             String image
@@ -36,11 +36,11 @@ public class JobResDto {
 
     @Builder
     public record BootcampListDTO(
-            List<Bootcamp> bootcampList
+            List<getBootcamp> getBootcampList
     ){}
 
     @Builder
-    public record Bootcamp(
+    public record getBootcamp(
             String name,
             String brand,
             String URL,
