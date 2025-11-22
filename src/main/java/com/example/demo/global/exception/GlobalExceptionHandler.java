@@ -1,6 +1,8 @@
 package com.example.demo.global.exception;
 
+import com.example.demo.game.exception.GameException;
 import com.example.demo.global.response.ApiResponse;
+import com.example.demo.job.exception.JobException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,32 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CoreException.class)
     public ResponseEntity<ApiResponse<?>> handleCoreException(CoreException e) {
         log.warn("CoreException: {}", e.getMessage());
+        ErrorType errorType = e.getErrorType();
+        return ResponseEntity
+                .status(errorType.getStatus())
+                .body(ApiResponse.error(errorType));
+    }
+
+    /**
+     * JobException 처리
+     * Job 관련 비즈니스 로직 예외
+     */
+    @ExceptionHandler(JobException.class)
+    public ResponseEntity<ApiResponse<?>> handleJobException(JobException e) {
+        log.warn("JobException: {}", e.getMessage());
+        ErrorType errorType = e.getErrorType();
+        return ResponseEntity
+                .status(errorType.getStatus())
+                .body(ApiResponse.error(errorType));
+    }
+
+    /**
+     * GameException 처리
+     * Game 관련 비즈니스 로직 예외
+     */
+    @ExceptionHandler(GameException.class)
+    public ResponseEntity<ApiResponse<?>> handleGameException(GameException e) {
+        log.warn("GameException: {}", e.getMessage());
         ErrorType errorType = e.getErrorType();
         return ResponseEntity
                 .status(errorType.getStatus())
