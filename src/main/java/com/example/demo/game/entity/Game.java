@@ -23,7 +23,4 @@ public class Game {
 
     @Column(name="content_num", nullable = false)
     private Integer content_num;
-
-    @Column(name="location", nullable = false)
-    private Boolean location;
 }
