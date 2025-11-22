@@ -1,6 +1,11 @@
 package com.example.demo.job.service;
 
+import com.example.demo.job.converter.JobConverter;
 import com.example.demo.job.dto.JobResDto;
+import com.example.demo.job.entity.Job;
+import com.example.demo.job.exception.JobErrorType;
+import com.example.demo.job.exception.JobException;
+import com.example.demo.job.repository.JobRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,23 +13,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class JobQueryService {
 
-//    private final YouTubeRepository youTubeRepository;
-//    private final BootcampRepository bootcampRepository;
+    private final JobRepository jobRepository;
 
     public JobResDto.JobDetailPage getJobDetail(Long jobId) {
 
-        /*
-        job = findbyid;
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(()->new JobException(JobErrorType.JOB_NOT_FOUND));
 
-        JobResDto.job = converter.toYoutubeDetail(job)
-        JobResDto.youtube = converter.toYoutubeDetail(job.youtube)
-        JobResDto.bootcamp = converter.toBootCampDetail(job.bootcamp)
+        JobResDto.Job jobDto = JobConverter.toJobDetail(job);
+        JobResDto.YoutubeListDTO youtubeListDTO = JobConverter.toYoutubeListDTO(job.getYoutubeList());
+        JobResDto.BootcampListDTO bootcampListDTO = JobConverter.toBootcampListDTO(job.getBootcampList());
 
-        return JobResDto.JobDetailPage = converter.toJobDetailPage(
-             JobResDto.job, JobResDto.youtube, JobResDto.bootcamp
-        )
-
-        */
-        return null;
+        return JobConverter.toJobDetailPage(
+                jobDto, youtubeListDTO, bootcampListDTO
+        );
     }
 }

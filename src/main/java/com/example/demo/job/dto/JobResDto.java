@@ -8,9 +8,9 @@ public class JobResDto {
 
     @Builder
     public record JobDetailPage(
-            Job job,
-            Youtube youtube,
-            Bootcamp bootcamp
+            JobResDto.Job jobDto,
+            JobResDto.YoutubeListDTO youtubeListDto, //youtubeListDto
+            JobResDto.BootcampListDTO bootcampListDTO
     ){}
 
     @Builder
@@ -21,11 +21,22 @@ public class JobResDto {
             String image
     ){}
 
+
+    @Builder
+    public record YoutubeListDTO(
+            List<Youtube> youtubeList
+    ){}
+
     @Builder
     public record Youtube(
             String title,
             String URL,
             String image
+    ){}
+
+    @Builder
+    public record BootcampListDTO(
+            List<Bootcamp> bootcampList
     ){}
 
     @Builder

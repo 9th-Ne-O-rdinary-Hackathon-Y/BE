@@ -18,6 +18,9 @@ public class Bootcamp {
     @Column(name="name", nullable = false)
     private String name;
 
+    @Column(name="brand", nullable = false)
+    private String brand;
+
     @Column(name="URL", nullable = false)
     private String URL;
 
