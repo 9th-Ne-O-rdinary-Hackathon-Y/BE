@@ -22,5 +22,5 @@ public class Game {
     private String content;
 
     @Column(name="content_num", nullable = false)
-    private Integer content_num;
+    private Integer contentNum;
 }
