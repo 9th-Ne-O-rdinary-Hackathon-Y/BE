@@ -1,4 +1,3 @@
-// Controller
 package com.example.demo.game.controller;
 
 import com.example.demo.game.dto.GameDto;
