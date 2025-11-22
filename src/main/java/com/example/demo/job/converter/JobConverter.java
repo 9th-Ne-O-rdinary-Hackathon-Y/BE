@@ -61,7 +61,6 @@ public class JobConverter {
     public static JobResDto.getBootcamp toBootcampDetail(Bootcamp bootcamp){
         return JobResDto.getBootcamp.builder()
                 .name(bootcamp.getName())
-                .brand(bootcamp.getBrand())
                 .URL(bootcamp.getURL())
                 .image(bootcamp.getImage())
                 .build();
