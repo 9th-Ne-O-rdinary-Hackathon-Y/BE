@@ -55,7 +55,7 @@ public class JobFindServiceImpl implements JobFindService {
         GAME3_SCORE_MAP.put(3, new JobFindCalcDto.AnalysisResultDto(10, 70, 10, 60, 10, 80));
     }
     
-    @Getter
+@Getter
 @RequiredArgsConstructor
 private enum JobWeight {
     PM("기획/PM", 1, 0.10, 0.05, 0.15, 0.30, 0.15, 0.25),
@@ -123,7 +123,7 @@ private enum JobWeight {
         JobFindCalcDto.AnalysisResultDto userFinalScore = calcAverage(result1, result2, result3);
 
         JobWeight bestJob = findBestJob(userFinalScore);
-
+        
         return JobFindRespDto.JobNumber.builder()
             .jobNumber(bestJob.getJobNumber())
             .build();

@@ -15,17 +15,15 @@ import jakarta.validation.Valid;
 
 
 @RestController
-@RequiredArgsConstructor
-@Validated
 @RequestMapping("/api/find")
+@RequiredArgsConstructor
 public class JobFindController {
-    private JobFindService jobFindService;
+    private final JobFindService jobFindService;
 
     @PostMapping("/job")
     public ApiResponse<JobFindRespDto.JobNumber> findJob(
             @Valid @RequestBody JobFindReqDto.JobFindRequestPost request
     ){
-
         return ApiResponse.success(jobFindService.getJobNumber(request));
     }
 }
