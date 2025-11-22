@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-@Table(name="Youtube")
+@Table(name="youtube")
 public class Youtube {
 
     @Id
