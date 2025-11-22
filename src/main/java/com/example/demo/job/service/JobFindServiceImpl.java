@@ -252,7 +252,32 @@ public class JobFindServiceImpl implements JobFindService {
     }
 
     private String generateDescription(JobFindCalcDto.AnalysisResultDto score) {
-        // 점수 기반으로 설명 생성
-        return "분석적으로 안정을 추구하며, 정확하게 처리하는 성향이에요.";
+        StringBuilder description = new StringBuilder();
+        
+        // 분석 vs 직관적
+        if (score.reasoning() > 50) {
+            description.append("분석");
+        } else {
+            description.append("직관");
+        }
+        description.append("적으로 ");
+        
+        // 도전 vs 안정
+        if (score.riskTaking() > 50) {
+            description.append("도전");
+        } else {
+            description.append("안정");
+        }
+        description.append("을 추구하며, ");
+        
+        // 정확 vs 신속
+        if (score.accuracy() > score.pace()) {
+            description.append("정확");
+        } else {
+            description.append("신속");
+        }
+        description.append("하게 처리하는 성향이에요.");
+        
+        return description.toString();
     }
 }
