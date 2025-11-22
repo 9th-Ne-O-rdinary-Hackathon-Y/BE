@@ -29,6 +29,7 @@ public class JobResDto {
 
     @Builder
     public record getYoutube(
+            Long youtubeId,
             String title,
             String URL,
             String image
@@ -41,8 +42,8 @@ public class JobResDto {
 
     @Builder
     public record getBootcamp(
+            Long bootcampId,
             String name,
-            String brand,
             String URL,
             String image
     ){}

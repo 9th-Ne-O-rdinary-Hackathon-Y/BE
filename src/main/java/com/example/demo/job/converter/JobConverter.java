@@ -52,17 +52,18 @@ public class JobConverter {
 
     public static JobResDto.getYoutube toYoutubeDetail(Youtube youtube){
         return JobResDto.getYoutube.builder()
+                .youtubeId(youtube.getId())
                 .title(youtube.getTitle())
-                .URL(youtube.getURL())
+                .URL(youtube.getUrl())
                 .image(youtube.getImage())
                 .build();
     }
 
     public static JobResDto.getBootcamp toBootcampDetail(Bootcamp bootcamp){
         return JobResDto.getBootcamp.builder()
+                .bootcampId(bootcamp.getId())
                 .name(bootcamp.getName())
-                .brand(bootcamp.getBrand())
-                .URL(bootcamp.getURL())
+                .URL(bootcamp.getUrl())
                 .image(bootcamp.getImage())
                 .build();
     }

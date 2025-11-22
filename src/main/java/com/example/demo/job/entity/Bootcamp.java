@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-@Table(name="Bootcamp")
+@Table(name="bootcamp")
 public class Bootcamp {
 
     @Id
@@ -18,11 +18,8 @@ public class Bootcamp {
     @Column(name="name", nullable = false)
     private String name;
 
-    @Column(name="brand", nullable = false)
-    private String brand;
-
-    @Column(name="URL", nullable = false)
-    private String URL;
+    @Column(name="url", nullable = false)
+    private String url;
 
     @Column(name="image", nullable = false)
     private String image;

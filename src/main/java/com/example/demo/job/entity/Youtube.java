@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-@Table(name="Youtube")
+@Table(name="youtube")
 public class Youtube {
 
     @Id
@@ -18,8 +18,8 @@ public class Youtube {
     @Column(name="title", nullable = false)
     private String title;
 
-    @Column(name="URL", nullable = false)
-    private String URL;
+    @Column(name="url", nullable = false)
+    private String url;
 
     @Column(name="image", nullable = false)
     private String image;
