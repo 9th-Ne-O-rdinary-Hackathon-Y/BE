@@ -1,5 +1,72 @@
 # BE
+<img width="617" height="442" alt="career-fit-infra" src="https://github.com/user-attachments/assets/de8d4099-286b-4b71-84de-a2efa7c127c1" />
+<br>
 
+### 🧡 BE를 소개합니다
+<div align=center><table>
+  <tr>
+        <td align="center"><a href="https://github.com/51taek"><img src="https://github.com/51taek.png" width="100px;" alt=""/><br /><b>51taek</b></a><p>앨런</p></td>
+          <td align="center"><a href="https://github.com/YoonchulChung"><img src="https://github.com/YoonchulChung.png" width="100px;" alt=""/><br /><b>YoonchulChung</b></a><p>알렉스</p></td>
+          <td align="center"><a href="https://github.com/gyeonseo"><img src="https://github.com/gyeonseo.png" width="100px;" alt=""/><br /><b>gyeonseo</b></a><p>견서</p></td>
+   </tr>
+</table></div>
+<br>
+
+  * Java 21
+
+    - 최신 문법(패턴 매칭, 레코드, 가상 스레드 등)을 지원해 가독성과 유지보수성이 향상됩니다.  
+    - 성능 최적화가 크게 개선되어 대규모 애플리케이션에서도 안정적으로 동작합니다.  
+    - 장기 지원(LTS) 버전으로 안정적인 운영이 가능합니다.
+    
+  * Spring Boot 3.4.9
+
+    - 스프링 생태계와 완벽하게 호환되며 최신 기능 및 보안 패치가 포함되어 있습니다.  
+    - 자동 설정(Auto Configuration) 기반으로 빠르게 애플리케이션을 구성할 수 있습니다.  
+    - REST API, 데이터 액세스, 시큐리티 등이 통합되어 있어 비즈니스 로직 개발에 집중할 수 있습니다.
+    
+  * Spring Data JPA
+
+    - 반복적이고 보일러플레이트가 많은 데이터 액세스 코드를 간소화합니다.  
+    - 명확한 도메인 모델 중심 개발이 가능하며, QueryDSL 등과 조합해 강력한 쿼리 작성이 가능합니다.
+    
+  * PostgreSQL
+
+    - ACID 트랜잭션을 충실히 준수하는 안정적인 오픈소스 RDBMS입니다.  
+    - JSONB 등 고급 기능을 제공해 유연한 구조 관리가 가능합니다.  
+    - 대규모 트래픽 환경에서도 성능과 확장성이 뛰어나며, Spring Data JPA와 매우 잘 어울립니다.
+
+<br>
+
+## API Documentation (Swagger)
+
+아래 주소에서 API 명세서를 확인할 수 있습니다.
+```
+http://localhost:8080/swagger-ui/index.html
+```
+<br>
+
+> **게임 결과 기반 직무 조회**<br>
+> **URL:** /api/job/<br>
+> **Method:** POST<br>
+> **ContentType:** application/json<br>
+> **Input:** clientX, clientY (사용자) vs answerX, answerY (정답)<br>
+> **Description:** 게임의 결과를 바탕으로 사용자에게 적합한 직무를 반환합니다.
+<br>
+
+> **직무 상세 조회**<br>
+> **URL:** /api/job/detail<br>
+> **Method:** GET<br>
+> **Parameter:** jobId (Integer, Required)<br>
+> **Example:** GET /api/job/detail?jobId=7
+<br>
+
+> **게임 데이터 조회**<br>
+> **URL:** /api/game<br>
+> **Method:** GET<br>
+> **Description:** 게임 진행에 필요한 초기 데이터를 반환합니다.
+<br>
+
+# 게임 알고리즘
 ## 게임 1번
 게임 1번은 순발력 테스트입니다. 얼마큼 빠르고 정확하게 정답과 가깝게 결과를 만드는지를 평가합니다.
 게임 1번은 아래 지표를 이용하여 계산합니다.
